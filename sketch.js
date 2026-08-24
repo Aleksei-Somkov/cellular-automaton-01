@@ -19,6 +19,9 @@ let finished = [];	// true when a quadrant has filled its height
 // Setup canvas
 
 function setup() {
+
+  pixelDensity(1);  // Should prevent blurry scaling on retina displays
+  
   createCanvas(WIDE, TALL);
   background(127);
   strokeWeight(1);
