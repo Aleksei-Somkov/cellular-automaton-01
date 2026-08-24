@@ -28,7 +28,8 @@ function setup() {
   
   // Blurriness happens during render, so this hopefully eliminates it. 
   canvas.elt.style.imageRendering = 'pixelated';
-  
+
+  noStroke();  // Just to be extra sure that strokes are disabled.
   background(127);
   // strokeWeight(1); // This might be the culprit for blurriness.
 
@@ -83,6 +84,7 @@ function draw() {
       const val = cells[q][i];
       const brightness = 255 - val * 255;	// white=1, black=0
       // stroke(brightness); // This might be the culprit for blurriness.
+      noStroke(); // This is absolutely required to avoid black borders around every cell. 
       fill(brightness);
       square(x, y, W);
     }
