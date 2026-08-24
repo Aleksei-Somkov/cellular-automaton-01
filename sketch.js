@@ -20,7 +20,7 @@ let canvas;
 // Setup canvas
 
 function setup() {
-  pixelDensity(min(displayDensity(), 2));  // Should prevent blurry scaling on retina displays
+  pixelDensity(1);  // Naaaah, anything more than 1 absolutely breaks the download img option.
   canvas = createCanvas(WIDE, TALL);
   
   // Gets the canvas reference and override p5's inline style (so mobile users could save images).
