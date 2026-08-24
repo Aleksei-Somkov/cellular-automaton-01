@@ -15,13 +15,23 @@ let cells = [];		// cells[q][i] – q = quadrant index, i = cell index
 let rules = [];		// rules[q][neighbourhood] – 32 entries per quadrant
 let t = [];		// current row (local y) for each quadrant
 let finished = [];	// true when a quadrant has filled its height
+let canvas;
 
 // Setup canvas
 
 function setup() {
-  createCanvas(WIDE, TALL);
+  pixelDensity(1);  // Naaaah, anything more than 1 absolutely breaks the download img option.
+  canvas = createCanvas(WIDE, TALL);
+  
+  // Gets the canvas reference and override p5's inline style (so mobile users could save images).
+  canvas.elt.style.touchAction = 'manipulation';
+  
+  // Blurriness happens during render, so this hopefully eliminates it. 
+  canvas.elt.style.imageRendering = 'pixelated';
+
+  noStroke();  // Just to be extra sure that strokes are disabled.
   background(127);
-  strokeWeight(1);
+  // strokeWeight(1); // This might be the culprit for blurriness.
 
   const totalQuads = COLS * ROWS;
 
@@ -51,7 +61,7 @@ function setup() {
 // Draw
 
 function draw() {
-  strokeWeight(1);
+  // strokeWeight(1); // This might be the culprit for blurriness.
 
   const totalQuads = COLS * ROWS;
 
@@ -73,7 +83,8 @@ function draw() {
       const y = offsetY + localT;
       const val = cells[q][i];
       const brightness = 255 - val * 255;	// white=1, black=0
-      stroke(brightness);
+      // stroke(brightness); // This might be the culprit for blurriness.
+      noStroke(); // This is absolutely required to avoid black borders around every cell. 
       fill(brightness);
       square(x, y, W);
     }
@@ -119,6 +130,39 @@ function draw() {
     if (!finished[q]) allDone = false;
   }
   if (allDone) {
+    // Swapping canvas with a static image
+    let img = document.createElement('img');
+    img.src = canvas.elt.toDataURL('image/png');
+
+    // Displays at the original logical size (so it fits the screen perfectly)
+    img.style.width = WIDE + 'px';
+    img.style.height = TALL + 'px';
+
+    // Visual styling
+    /*
+    img.style.border = '2px solid #444';
+    img.style.borderRadius = '4px';
+    img.style.display = 'block';
+    */
+
+    // Native save menu
+    img.style.webkitTouchCallout = 'default';
+    img.style.userSelect = 'auto';
+    img.style.touchAction = 'manipulation';
+
+    // This should reduce the blurring.
+    img.style.imageRendering = 'pixelated';          // Chrome / Edge / Firefox
+    img.style.imageRendering = 'crisp-edges';        // Fallback for older browsers
+    img.style.msInterpolationMode = 'nearest-neighbor'; // Legacy IE
+
+    // Replaces the canvas with this image in the DOM
+    canvas.elt.parentNode.replaceChild(img, canvas.elt);
     noLoop();
   }
+}
+
+// This function should stop p5 from blocking the touch event
+
+function touchStarted() {
+  return true;  // Do not call preventDefault()
 }

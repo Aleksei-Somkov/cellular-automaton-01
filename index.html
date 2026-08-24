@@ -13,10 +13,13 @@
             min-height: 100vh;
             background: #1a1a1a;
         }
-        canvas {
-            display: block;
-            border: 2px solid #444;
-            border-radius: 4px;
+        canvas, img {   /* They both get the same visual treatment */
+        display: block;
+        border: 2px solid #444;
+        border-radius: 4px;
+        image-rendering: pixelated;                  /* Chrome / Edge / Firefox */
+        image-rendering: crisp-edges;                /* Safari / older browsers */
+        -ms-interpolation-mode: nearest-neighbor;    /* IE */
         }
     </style>
 </head>
