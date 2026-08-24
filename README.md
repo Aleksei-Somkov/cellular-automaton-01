@@ -4,4 +4,4 @@ To see new patterns, you can simply refresh the page.
 
 If you are experiencing issues with visibility on mobile, try turning on the "desktop site" option in the settings, as well as zooming out.
 
-<img width="658" height="1280" alt="image" src="https://github.com/user-attachments/assets/1a220e86-63e6-4e36-b7cc-ea33285bf482" />
+<img width="329" height="640" alt="image" src="https://github.com/user-attachments/assets/1a220e86-63e6-4e36-b7cc-ea33285bf482" />
