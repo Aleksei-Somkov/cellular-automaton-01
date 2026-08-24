@@ -133,5 +133,5 @@ function draw() {
 // This function should stop p5 from blocking the touch event
 
 function touchStarted() {
-  return false;  // Do not call preventDefault()
+  return true;  // Do not call preventDefault()
 }
