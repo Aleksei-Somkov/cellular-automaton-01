@@ -30,7 +30,7 @@ function setup() {
   canvas.elt.style.imageRendering = 'pixelated';
   
   background(127);
-  strokeWeight(1);
+  // strokeWeight(1); // This might be the culprit for blurriness.
 
   const totalQuads = COLS * ROWS;
 
@@ -60,7 +60,7 @@ function setup() {
 // Draw
 
 function draw() {
-  strokeWeight(1);
+  // strokeWeight(1); // This might be the culprit for blurriness.
 
   const totalQuads = COLS * ROWS;
 
@@ -82,7 +82,7 @@ function draw() {
       const y = offsetY + localT;
       const val = cells[q][i];
       const brightness = 255 - val * 255;	// white=1, black=0
-      stroke(brightness);
+      // stroke(brightness); // This might be the culprit for blurriness.
       fill(brightness);
       square(x, y, W);
     }
@@ -137,9 +137,11 @@ function draw() {
     img.style.height = TALL + 'px';
 
     // Visual styling
+    /*
     img.style.border = '2px solid #444';
     img.style.borderRadius = '4px';
     img.style.display = 'block';
+    */
 
     // Native save menu
     img.style.webkitTouchCallout = 'default';
