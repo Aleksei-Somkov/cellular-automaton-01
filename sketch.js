@@ -20,8 +20,7 @@ let canvas;
 // Setup canvas
 
 function setup() {
-  pixelDensity(1);  // Should prevent blurry scaling on retina displays
-  
+  pixelDensity(min(displayDensity(), 2));  // Should prevent blurry scaling on retina displays
   canvas = createCanvas(WIDE, TALL);
   
   // Gets the canvas reference and override p5's inline style (so mobile users could save images).
@@ -128,15 +127,26 @@ function draw() {
   if (allDone) {
     // Swapping canvas with a static image
     let img = document.createElement('img');
-    img.src = canvas.elt.toDataURL('image/png');  // capture the finished pattern
+    img.src = canvas.elt.toDataURL('image/png');
+
+    // Displays at the original logical size (so it fits the screen perfectly)
     img.style.width = WIDE + 'px';
     img.style.height = TALL + 'px';
+
+    // Visual styling
     img.style.border = '2px solid #444';
     img.style.borderRadius = '4px';
     img.style.display = 'block';
-    img.style.webkitTouchCallout = 'default';     // enables "Save Image" on iOS
-    img.style.userSelect = 'auto';                // enables menu on Android
-    img.style.touchAction = 'manipulation';       // allows pinch‑to‑zoom
+
+    // Native save menu
+    img.style.webkitTouchCallout = 'default';
+    img.style.userSelect = 'auto';
+    img.style.touchAction = 'manipulation';
+
+    // This should reduce the blurring.
+    img.style.imageRendering = 'pixelated';          // Chrome / Edge / Firefox
+    img.style.imageRendering = 'crisp-edges';        // Fallback for older browsers
+    img.style.msInterpolationMode = 'nearest-neighbor'; // Legacy IE
 
     // Replaces the canvas with this image in the DOM
     canvas.elt.parentNode.replaceChild(img, canvas.elt);
