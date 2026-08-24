@@ -22,7 +22,11 @@ function setup() {
 
   pixelDensity(1);  // Should prevent blurry scaling on retina displays
   
-  createCanvas(WIDE, TALL);
+  let canvas = createCanvas(WIDE, TALL);
+  
+  // Gets the canvas reference and override p5's inline style (so mobile users could save images).
+  canvas.elt.style.touchAction = 'auto';
+  
   background(127);
   strokeWeight(1);
 
@@ -124,4 +128,10 @@ function draw() {
   if (allDone) {
     noLoop();
   }
+}
+
+// This function should stop p5 from blocking the touch event
+
+function touchStarted() {
+  return false;  // Do not call preventDefault()
 }
