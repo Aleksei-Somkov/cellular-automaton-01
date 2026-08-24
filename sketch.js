@@ -1,8 +1,8 @@
 // Configuration
 
 const W = 2;		// cell size (pixels)
-const WIDE = 1280;	// canvas width
-const TALL = 720;	// canvas height
+const WIDE = 1920;	// canvas width
+const TALL = 1080;	// canvas height
 const COLS = 4;		// WARNING - will break if WIDE % COLS != 0
 const ROWS = 1;		// WARNING - will break if TALL % ROWS != 0
 const QUAD_W = WIDE / COLS;
