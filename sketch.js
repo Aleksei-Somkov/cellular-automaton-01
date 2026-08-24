@@ -15,17 +15,17 @@ let cells = [];		// cells[q][i] – q = quadrant index, i = cell index
 let rules = [];		// rules[q][neighbourhood] – 32 entries per quadrant
 let t = [];		// current row (local y) for each quadrant
 let finished = [];	// true when a quadrant has filled its height
+let canvas;
 
 // Setup canvas
 
 function setup() {
-
   pixelDensity(1);  // Should prevent blurry scaling on retina displays
   
-  let canvas = createCanvas(WIDE, TALL);
+  canvas = createCanvas(WIDE, TALL);
   
   // Gets the canvas reference and override p5's inline style (so mobile users could save images).
-  canvas.elt.style.touchAction = 'auto';
+  canvas.elt.style.touchAction = 'manipulation';
   
   background(127);
   strokeWeight(1);
@@ -126,6 +126,20 @@ function draw() {
     if (!finished[q]) allDone = false;
   }
   if (allDone) {
+    // Swapping canvas with a static image
+    let img = document.createElement('img');
+    img.src = canvas.elt.toDataURL('image/png');  // capture the finished pattern
+    img.style.width = WIDE + 'px';
+    img.style.height = TALL + 'px';
+    img.style.border = '2px solid #444';
+    img.style.borderRadius = '4px';
+    img.style.display = 'block';
+    img.style.webkitTouchCallout = 'default';     // enables "Save Image" on iOS
+    img.style.userSelect = 'auto';                // enables menu on Android
+    img.style.touchAction = 'manipulation';       // allows pinch‑to‑zoom
+
+    // Replaces the canvas with this image in the DOM
+    canvas.elt.parentNode.replaceChild(img, canvas.elt);
     noLoop();
   }
 }
