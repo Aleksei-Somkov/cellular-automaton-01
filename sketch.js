@@ -26,6 +26,9 @@ function setup() {
   // Gets the canvas reference and override p5's inline style (so mobile users could save images).
   canvas.elt.style.touchAction = 'manipulation';
   
+  // Blurriness happens during render, so this hopefully eliminates it. 
+  canvas.elt.style.imageRendering = 'pixelated';
+  
   background(127);
   strokeWeight(1);
 
@@ -144,11 +147,9 @@ function draw() {
     img.style.touchAction = 'manipulation';
 
     // This should reduce the blurring.
-    /*
     img.style.imageRendering = 'pixelated';          // Chrome / Edge / Firefox
     img.style.imageRendering = 'crisp-edges';        // Fallback for older browsers
     img.style.msInterpolationMode = 'nearest-neighbor'; // Legacy IE
-    */
 
     // Replaces the canvas with this image in the DOM
     canvas.elt.parentNode.replaceChild(img, canvas.elt);
