@@ -13,16 +13,10 @@
             min-height: 100vh;
             background: #1a1a1a;
         }
-        canvas {
-            display: block;
-            border: 2px solid #444;
-            border-radius: 4px;
-    
-            /* Hopefully, these 4 lines will enable the long-press save menu */
-            -webkit-touch-callout: default;   /* iOS Safari - shows "Save Image" */
-            -webkit-user-select: auto;        /* iOS Safari - allows selection context */
-            user-select: auto;                /* Standard property */
-            touch-action: manipulation;       /* Ensures touch gestures aren't blocked */
+        canvas, img {   /* They both get the same visual treatment */
+        display: block;
+        border: 2px solid #444;
+        border-radius: 4px;
         }
     </style>
 </head>
